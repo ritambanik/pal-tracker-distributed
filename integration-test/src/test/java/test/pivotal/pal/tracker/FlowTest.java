@@ -155,4 +155,48 @@ public class FlowTest {
         response = httpClient.get(timesheetsServerUrl("/time-entries?projectId" + createdProjectId));
         assertThat(response.body).isNotNull().isNotEmpty();
     }
+
+    @Test
+    public void testHystrixFlow() {
+        HttpClient.Response response;
+
+        response = httpClient.post(registrationServerUrl("/registration"), jsonMapBuilder()
+                .put("name", "aUser")
+                .build()
+        );
+        long createdUserId = findResponseId(response);
+        assertThat(createdUserId).isGreaterThan(0);
+
+        response = httpClient.get(registrationServerUrl("/accounts?ownerId=" + createdUserId));
+        long createdAccountId = findResponseId(response);
+        assertThat(createdAccountId).isGreaterThan(0);
+
+        response = httpClient.post(registrationServerUrl("/projects"), jsonMapBuilder()
+                .put("accountId", createdAccountId)
+                .put("name", "aProject")
+                .build()
+        );
+        long createdProjectId = findResponseId(response);
+        assertThat(createdProjectId).isGreaterThan(0);
+
+        response = httpClient.post(timesheetsServerUrl("/time-entries"), jsonMapBuilder()
+                .put("projectId", createdProjectId)
+                .put("userId", createdUserId)
+                .put("date", "2015-12-17")
+                .put("hours", 8)
+                .build()
+        );
+        assertThat(findResponseId(response)).isGreaterThan(0);
+
+        registrationServer.stop();
+
+        response = httpClient.post(timesheetsServerUrl("/time-entries"), jsonMapBuilder()
+                .put("projectId", createdProjectId)
+                .put("userId", createdUserId)
+                .put("date", "2015-12-17")
+                .put("hours", 8)
+                .build()
+        );
+        assertThat(findResponseId(response)).isGreaterThan(0);
+    }
 }

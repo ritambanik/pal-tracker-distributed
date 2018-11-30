@@ -17,6 +17,8 @@ jobs:
       jdk: oraclejdk8
       addons:
         mariadb: '10.2'
+      services:
+        - redis-server
       install: skip
       before_script:
         - mysql -uroot < databases/create_databases.sql

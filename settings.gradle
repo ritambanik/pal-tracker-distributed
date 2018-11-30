@@ -14,6 +14,7 @@ include "components:users"
 
 include "components:rest-support"
 include "components:test-support"
+include "components:cache-support"
 
 include "databases:allocations-database"
 include "databases:backlog-database"

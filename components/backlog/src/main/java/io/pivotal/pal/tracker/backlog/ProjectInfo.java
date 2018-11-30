@@ -1,6 +1,8 @@
 package io.pivotal.pal.tracker.backlog;
 
-public class ProjectInfo {
+import java.io.Serializable;
+
+public class ProjectInfo implements Serializable {
 
     public final boolean active;
 

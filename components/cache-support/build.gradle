@@ -1,0 +1,6 @@
+dependencies {
+    compile "org.springframework.data:spring-data-redis:2.0.3.RELEASE"
+    compile "redis.clients:jedis:2.9.0"
+    compile "org.springframework:spring-context:$springVersion"
+    compile "org.springframework:spring-test:$springVersion"
+}
