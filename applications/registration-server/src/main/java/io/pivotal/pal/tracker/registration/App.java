@@ -1,4 +1,4 @@
-gitpackage io.pivotal.pal.tracker.registration;
+package io.pivotal.pal.tracker.registration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
