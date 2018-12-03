@@ -92,8 +92,9 @@ public class ProjectClient {
             jedis.connect();
             // authorize with our password
             jedis.auth(info.getPassword());
+            return jedis;
         }
-        return jedis;
+        return null;
     }
 
     private String setKey(String key, String val) {
@@ -102,7 +103,9 @@ public class ProjectClient {
         if (jedis == null || !jedis.isConnected()) {
             jedis = getJedisConnection();
         }
-        jedis.set(key, val);
+        if (jedis != null) {
+            jedis.set(key, val);
+        }
 
         return "Set key: " + key + " to value: " + val;
     }
@@ -113,8 +116,10 @@ public class ProjectClient {
         if (jedis == null || !jedis.isConnected()) {
             jedis = getJedisConnection();
         }
-
-        return jedis.get(key);
+        if (jedis != null) {
+            return jedis.get(key);
+        }
+        return StringUtils.EMPTY;
     }
 
 
