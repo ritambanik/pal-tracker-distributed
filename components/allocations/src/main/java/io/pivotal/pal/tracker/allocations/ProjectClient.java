@@ -87,12 +87,12 @@ public class ProjectClient {
         RedisInstanceInfo info = getInfo();
         Jedis jedis = new Jedis(info.getHost(), info.getPort());
 
-        // make the connection
-        jedis.connect();
-
-        // authorize with our password
-        jedis.auth(info.getPassword());
-
+        if (StringUtils.isNotBlank(info.getHost()) && info.getPort() != 0) {
+            // make the connection
+            jedis.connect();
+            // authorize with our password
+            jedis.auth(info.getPassword());
+        }
         return jedis;
     }
 
