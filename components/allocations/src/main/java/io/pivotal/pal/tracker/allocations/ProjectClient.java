@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.client.RestOperations;
 import redis.clients.jedis.Jedis;
 
@@ -33,11 +34,10 @@ public class ProjectClient {
 
     private ProjectInfo getProjectFromCache(long projectId) {
         Gson gson = new Gson();
-        String json;
+        String json = getKey(String.valueOf(projectId));
         ProjectInfo projectInfo = null;
-        if (jedis.get(String.valueOf(projectId)) != null) {
-            json = jedis.get(String.valueOf(projectId));
-            projectInfo = gson.fromJson(json, ProjectInfo.class);
+        if (StringUtils.isNotEmpty(json)) {
+           projectInfo = gson.fromJson(json, ProjectInfo.class);
         }
         return projectInfo;
     }
