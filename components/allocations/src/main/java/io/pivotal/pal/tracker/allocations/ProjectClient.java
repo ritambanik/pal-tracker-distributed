@@ -52,6 +52,9 @@ public class ProjectClient {
 
         // now we parse the json in VCAP_SERVICES
         LOG.log(Level.WARNING, "Using GSON to parse the json...");
+        if (StringUtils.isBlank(vcap)) {
+            return new RedisInstanceInfo();
+        }
         JsonElement root = new JsonParser().parse(vcap);
         JsonObject redis = null;
         if (root != null) {
