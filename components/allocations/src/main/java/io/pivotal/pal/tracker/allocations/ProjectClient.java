@@ -33,8 +33,12 @@ public class ProjectClient {
 
     private ProjectInfo getProjectFromCache(long projectId) {
         Gson gson = new Gson();
-        String json = jedis.get(String.valueOf(projectId));
-        ProjectInfo projectInfo = gson.fromJson(json, ProjectInfo.class);
+        String json;
+        ProjectInfo projectInfo = null;
+        if (jedis.get(String.valueOf(projectId)) != null) {
+            json = jedis.get(String.valueOf(projectId));
+            projectInfo = gson.fromJson(json, ProjectInfo.class);
+        }
         return projectInfo;
     }
 
