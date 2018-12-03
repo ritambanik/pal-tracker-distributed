@@ -19,14 +19,6 @@ buildscript {
         classpath "mysql:mysql-connector-java:$mysqlVersion"
       }
 
-    configurations.all {
-        resolutionStrategy {
-            dependencySubstitution {
-                substitute module('org.codehaus.groovy:groovy:2.4.15') with module('org.codehaus.groovy:groovy:2.4.7')
-            }
-        }
-    }
-
 
 }
 
@@ -55,9 +47,6 @@ subprojects {
         testCompile "org.mockito:mockito-core:2.2.26"
         testCompile "org.assertj:assertj-core:3.8.0"
     }
-
-
-
 
 }
 

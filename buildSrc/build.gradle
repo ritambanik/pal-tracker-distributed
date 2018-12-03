@@ -3,5 +3,5 @@ repositories {
 }
 
 dependencies {
-    compile "org.flywaydb:flyway-gradle-plugin:4.2.0"
+    compile "org.flywaydb:flyway-gradle-plugin:5.2.0"
 }
